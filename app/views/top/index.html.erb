@@ -1,0 +1,201 @@
+<head>
+  <%= favicon_link_tag 'favicon.ico' %>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+
+<header>
+  <div class="header-container">
+    <h1 class="header-title">就活管理</h1>
+    <div class="header-buttons">
+      <button class="login-button">ログイン</button>
+      <button class="register-button">会員登録</button>
+    </div>
+  </div>
+</header>
+
+<div class="background-container">
+  <div style="text-align: center; padding: 100px 20%; color: white; font-size: large;">
+    このプラットフォームは、就職活動を効率的にサポートするツールを提供します。
+    選考中の企業情報や面接の反省、面接質問の管理、スケジュール調整、ES作成など、全てを一元管理できます。
+    これにより、準備が整い、就活をスムーズに進めることができます。今すぐ活用して、就職活動を成功に導きましょう！
+  </div>
+<div class="function">
+  <h1 style="letter-spacing: 5px;">機能一覧</h1>
+</div>
+
+  <div class="function-container">
+    <div class="function-box">
+      <i class="bi bi-graph-up-arrow" style="font-size: 2rem;"></i>
+      <h3>選考中の企業管理</h3>
+      <p>合否、選考日付、選考状況、選考結果を一元管理できます。</p>
+    </div>
+
+    <div class="function-box">
+      <i class="bi bi-search" style="font-size: 2rem;"></i>
+      <h3>企業研究</h3>
+      <p>志望企業の情報を一元管理！業界研究もスムーズに進めて、万全の準備を整えましょう。</p>
+    </div>
+
+    <div class="function-box">
+      <i class="bi bi-chat-text" style="font-size: 2rem;"></i>
+      <h3>面接反省</h3>
+      <p>面接の手応えを振り返り、次回の成功につなげよう！成長の記録があなたの自信になります。</p>
+    </div>
+
+    <div class="function-box">
+      <i class="bi bi-question-circle" style="font-size: 2rem;"></i>
+      <h3>面接の質問の登録</h3>
+      <p>実際に聞かれた質問とベストな回答をストック！あなただけの「面接攻略ノート」を作成しよう。</p>
+    </div>
+
+    <div class="function-box">
+      <i class="bi bi-calendar-date" style="font-size: 2rem;"></i>
+      <h3>スケジュール管理</h3>
+      <p>面接日程や企業の選考スケジュールを効率的に管理！重要な予定を見逃さず、準備万端で就職活動を進めましょう。</p>
+    </div>
+
+    <div class="function-box">
+      <i class="bi bi-file-text" style="font-size: 2rem;"></i>
+      <h3>ES管理</h3>
+      <p>書類選考の通過率をアップ！過去のESを活用して、効率的に質の高いエントリーシートを作成しよう。</p>
+    </div>
+  </div>
+
+  <div style="text-align: center; margin-top: 40px; display: block; padding-bottom: 80px;">
+    <%= link_to "今すぐ登録する", user_path(2), class: "cta-button", style: "text-decoration: none;" %>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2025 就活管理. All rights reserved.</p>
+</footer>
+
+<style>
+button {
+  white-space: nowrap; 
+}
+
+.header-container {
+  background: linear-gradient(135deg, rgb(63, 63, 204), rgb(120, 120, 255));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+.header-title {
+  margin: 0;
+  color: #ffffff;
+  font-family: "Oswald", sans-serif; 
+  font-weight: 700;
+  padding-left: 20px;
+}
+.header-buttons {
+  display: flex;
+  gap: 30px;
+}
+.login-button {
+   background: none;
+   border: none;
+   color: white;
+   font-size: large;
+}
+.register-button {
+  padding: 8px 15px;
+  background-color: white;
+  color: rgb(63, 63, 204);
+  border: 2px solid rgb(63, 63, 204);
+  border-radius: 5px;
+  font-size: large;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.register-button:hover {
+  background-color: rgb(63, 63, 204);
+  color: white;
+} 
+.background-container{
+    background-image: url("<%= asset_path('sky.jpg') %>");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    margin: 0; 
+    padding: 0;
+    margin-top
+    height: 100vh;
+  }
+.function {
+  text-align: center;
+  padding: 10px 20px;
+  margin-bottom: 30px;
+  max-width: 600px; /* 最大幅 */
+  margin-left: auto;
+  margin-right: auto;
+  
+}
+  .function-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding-bottom:25px;
+    margin-top: 0;
+  }
+
+  .function-box {
+    width: 30%;
+    padding: 15px;
+    border: 3px solid #ddd;
+    border-radius: 15px;
+    text-align: center;
+    background: white ;
+    background: rgba(255, 255, 255, 0.7);
+    top: 0;
+    position: relative;
+    transition: all 0.5s;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .function-box:hover {
+    top: -5px;
+    box-shadow: 0 8px 13px rgba(0, 0, 0, 0.4);
+  }
+
+  i {
+    display: block;
+    margin-bottom: 8px;
+    color: blue;
+  }
+
+  .cta-button {
+    background: #ff5733;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 25px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .cta-button:hover {
+    background: #ff3d00;
+    box-shadow: 0px 4px 10px rgba(255, 87, 51, 0.4);
+  }
+
+  footer {
+   background-color: rgb(20, 20, 50);
+   color: white;
+   text-align: center;
+   padding: 15px 0;
+   width: 100%;
+   box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.2);
+   margin-top: auto;
+ }
+
+ footer p {
+   margin: 0;
+   font-size: 0.9rem;
+ }
+ 
+</style>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_03_26_154219) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_08_170257) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -67,7 +67,45 @@ ActiveRecord::Schema[7.1].define(version: 2023_03_26_154219) do
     t.index ["article_id"], name: "index_comments_on_article_id"
   end
 
+  create_table "companies", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "name"
+    t.string "industry"
+    t.string "website"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "status"
+    t.string "website_url"
+    t.string "selection_type"
+    t.index ["user_id"], name: "index_companies_on_user_id"
+  end
+
+  create_table "selections", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "company_id", null: false
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "type"
+    t.string "result"
+    t.string "selection_type"
+    t.datetime "date"
+    t.index ["company_id"], name: "index_selections_on_company_id"
+    t.index ["user_id"], name: "index_selections_on_user_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "password"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "articles"
+  add_foreign_key "companies", "users"
+  add_foreign_key "selections", "companies"
+  add_foreign_key "selections", "users"
 end

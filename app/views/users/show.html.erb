@@ -1,0 +1,303 @@
+<h2>選考中の企業</h2>
+<div class="table-wrap">
+  <table class="companies-table" id="companies-table">
+    <thead>
+      <tr>
+        <th>企業名</th>
+        <th>選考種類</th>
+        <th>選考状況</th>
+        <th>選考日</th>
+        <th>選考結果</th>
+      </tr>
+    </thead>
+      <tbody>
+        <% @companies.each do |company| %>
+        <% company.selections.each do |selection| %>
+          <tr>
+            <td style="text-align: left;">
+              <i class="bi bi-pencil-square" style="margin-right: 5%;" title="編集"></i>
+              <%= link_to company.name, new_user_company_path(@user, company_id: company.id), 
+                    style: "text-decoration: none; display: inline-block; padding-right: 5px;" %>
+            </td>
+            <td><%= selection.selection_type %></td>
+            <td><%= selection.status %></td>
+            <td><%= selection.formatted_date %></td>
+            <td><%= selection.result %></td>
+          </tr>
+        <% end %>
+      <% end %>
+          <tr>
+            <td colspan="5" style="text-align: center;">
+              <div class="add-company-container">
+                <button class="add-company-btn" id="add-company-btn">
+                  <i class="bi bi-plus-circle"  style="font-size: 1.25rem;"></i>
+                </button>
+              </div>
+              <div class="register-container" id="register-container">
+                <button class="register-company-btn" id="register-company-btn">
+                  企業を登録
+                </button>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+  </table> 
+</div>
+
+
+<div class="question-container">
+  <h2>直近の質問</h2>
+  <table class="question-table">
+    <tbody>
+      <tr>
+        <td><i class="bi bi-question-circle"></i>自己紹介をしてください</td>
+      </tr>
+      <tr>
+        <td><i class="bi bi-question-circle"></i>御社を志望する理由を教えてください</td>
+      </tr>
+      <tr>
+        <td><i class="bi bi-question-circle"></i>あなたの強みを教えてください</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  let addCompanyBtn = document.getElementById('add-company-btn');
+  let registerCompanyBtn = document.getElementById('register-company-btn');
+  registerCompanyBtn.style.display = "none"; // 初期状態で非表示
+
+  // 登録ボタンが押されたときの処理
+  registerCompanyBtn.addEventListener('click', function () {
+    if (registerCompanyBtn.style.display === "block") {
+      addCompanyBtn.style.display = "block";
+      registerCompanyBtn.style.display = "none";
+    }
+
+    // 各入力フィールドの値を取得
+    let companyNameInput = document.getElementById('company-name');
+    let selectionTypeInput = document.getElementById('selection-type');
+    let selectionDateInput = document.getElementById('selection-date');
+    let selectionStatusInput = document.getElementById('selection-status');
+    let selectionResultInput = document.getElementById('selection-result');
+
+    let companyName   = companyNameInput.value;
+    let selectionType = selectionTypeInput.value;
+    let selectionDate = selectionDateInput.value;
+    let selectionStatus = selectionStatusInput.value;
+    let selectionResult = selectionResultInput.value;
+
+    // サーバーにデータを送信
+    fetch('/selections', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+      },
+      body: JSON.stringify({
+        company: {
+          name: companyName,
+        },
+        selection: {
+          user_id: 2,
+          selection_type: selectionType,
+          date: selectionDate,
+          status: selectionStatus,
+          result: selectionResult
+        }
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message) {
+          alert(data.message);
+        }
+
+        // 入力フィールドを非表示にし、そのセルに入力された値を表示
+        companyNameInput.style.display   = 'none';
+        selectionTypeInput.style.display = 'none';
+        selectionDateInput.style.display = 'none';
+        selectionStatusInput.style.display = 'none';
+        selectionResultInput.style.display = 'none';
+
+        companyNameInput.parentElement.textContent   = companyName;
+        selectionTypeInput.parentElement.textContent = selectionType;
+        selectionDateInput.parentElement.textContent = selectionDate.replace("T", " ");
+        selectionStatusInput.parentElement.textContent = selectionStatus;
+        selectionResultInput.parentElement.textContent = selectionResult;
+      })
+      .catch(error => console.error('エラー:', error));
+  });
+
+  // ＋ボタンが押されたときの処理
+  addCompanyBtn.addEventListener('click', function () {
+    if (registerCompanyBtn.style.display === "none") {
+      addCompanyBtn.style.display = "none";
+      registerCompanyBtn.style.display = "block";
+    }
+
+    let companiesTable = document.getElementById('companies-table').getElementsByTagName('tbody')[0];
+    let newCompaniesRow = companiesTable.insertRow(companiesTable.rows.length - 1);
+
+    // 各セルを作成し、入力フィールドを追加
+    let companyNameCell = newCompaniesRow.insertCell(0);
+    let selectionTypeCell = newCompaniesRow.insertCell(1);
+    let selectionStatusCell = newCompaniesRow.insertCell(2);
+    let selectionDateCell = newCompaniesRow.insertCell(3);
+    let selectionResultCell = newCompaniesRow.insertCell(4);
+
+    companyNameCell.innerHTML = '<input type="text" id="company-name" placeholder="企業名" />';
+
+    selectionTypeCell.innerHTML = `
+      <select id="selection-type">
+        <option value="インターン">インターン</option>
+        <option value="本選考">本選考</option>
+      </select>
+    `;
+
+    selectionDateCell.innerHTML = '<input type="datetime-local" id="selection-date"/>';
+
+    selectionStatusCell.innerHTML = `
+      <select id="selection-status">
+        <option value="面談">面談</option>
+        <option value="説明会">説明会</option>
+        <option value="書類選考">書類選考</option>
+        <option value="WEBテスト">WEBテスト</option>
+        <option value="１次面接">１次面接</option>
+        <option value="２次面接">２次面接</option>
+        <option value="３次面接">３次面接</option>
+        <option value="最終面接">最終面接</option>
+      </select>
+    `;
+
+    selectionResultCell.innerHTML = `
+      <select id="selection-result">
+        <option value="内定">内定</option>
+        <option value="辞退">辞退</option>
+        <option value="合格">合格</option>
+        <option value="不合格">不合格</option>
+      </select>
+    `;
+  });
+});
+
+
+
+
+</script>
+
+<style>
+
+  h2 {
+    margin-bottom: 5px;
+    padding:  0 2%;
+  }
+
+  .companies-table-table th, .companies-table td {
+    width: 20%;
+    white-space: nowrap;
+  }
+
+  .add-company-container{
+    display: flex;             /* フレックスボックスを有効化 */
+    justify-content: center;   /* 横方向（左右）の中央配置 */
+    align-items: center;       /* 縦方向の中央配置（必要なら追加） */
+  }
+
+  .question-container{
+    margin-bottom: 30px;
+  }
+
+  .question-container h2{
+    padding: 0 2%;
+  }
+
+  .add-company-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;             /* アイコンを中央揃え */
+    justify-content: center;   /* アイコンを中央揃え */
+    align-items: center;       /* アイコンを中央揃え */
+  }
+  .question-table i {
+      margin-bottom: 8px;
+      color: blue;
+      padding-right: 20px;
+  }
+  .question-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    padding: 0 2%;
+  }
+
+  .question-table tr {
+    background-color: white;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1 );
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .question-table td {
+    text-align: left;
+    font-size: 20px;
+    padding: 15px;
+    border-radius: 8px;
+  }
+
+  .table-wrap{
+    overflow-x: scroll;
+    margin-top: 0;
+    padding: 0 2%;
+  }
+
+  .companies-table{
+    padding-bottom: 50px;
+    white-space: nowrap;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+
+  th, td {
+    padding: 10px;
+    text-align: center;
+    border: 1.5px solid #ddd;
+  }
+
+  th {
+    background-color: #f4f4f4;
+  }
+
+  .register-container {
+    display: flex;             /* フレックスボックスを使って中央配置 */
+    justify-content: center;   /* 横方向に中央配置 */
+    align-items: center;       /* 縦方向に中央配置 */
+    height: 100%;              /* コンテナが高さ100%を持つように設定 */
+  }
+
+  .register-company-btn {
+    background-color: #007bff; 
+    color: white; 
+    padding: 3px 15px; 
+    font-size: 14px; 
+    border: none;
+    border-radius: 8px;
+    cursor: pointer; /* マウスカーソルがポインターになる */
+    transition: background-color 0.3s ease;
+  }
+
+  .register-company-btn:hover {
+    background-color: #0056b3;
+  }
+
+  .register-company-btn:focus {
+    outline: none;
+  }
+</style>
+

@@ -1,17 +1,67 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Railsondocker</title>
+    <title>就活管理</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+    <%= favicon_link_tag 'favicon.ico' %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" >
   </head>
-
   <body>
+   <header>
+    <div class="header-container">
+      <h1 class="header-title">就活管理</h1>
+    </div>
+    <div style="padding: 10px 10px 0 30px;">ログインユーザー： <%= @user.name %> </div>
+    <div class="menu-container" style="text-align: center; display: flex; justify-content: center; width: 60%; padding: 10px; gap: 20px; border-bottom: 2px solid #ddd; margin-left: auto; margin-right: auto;">
+      <%= link_to "ホーム", user_path(@user), style: "text-decoration: none; color: #007bff;" %>
+      <a href="/all-es" style="text-decoration: none; color: #007bff;">ESまとめ</a>
+      <a href="/interview-questions" style="text-decoration: none; color: #007bff;">面接の質問まとめ</a>
+    </div>
+  </header>
     <%= yield %>
+    <footer>
+      <p>&copy; 2025 就活管理. All rights reserved.</p>
+    </footer>
   </body>
 </html>
+
+<style>
+  .menu-container{
+    white-space: nowrap;
+  }
+ .header-container {
+  background: linear-gradient(135deg, rgb(63, 63, 204), rgb(120, 120, 255));
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 7px;
+ }
+
+.header-title {
+  margin: 0;
+  color: #ffffff;
+  font-family: "Oswald", sans-serif; 
+  font-weight: 700;
+  padding-left: 25px;
+}
+
+ footer {
+   background-color: rgb(20, 20, 50);
+   color: white;
+   text-align: center;
+   padding: 15px 0;
+   width: 100%;
+   box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.2);
+   margin-top: auto;
+ }
+
+ footer p {
+   margin: 0;
+   font-size: 0.9rem;
+ }
+ 
+</style>

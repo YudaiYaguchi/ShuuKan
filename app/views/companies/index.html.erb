@@ -1,0 +1,22 @@
+<h2>企業研究・ES・面接の質問</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>企業名</th>
+      <th>ES</th>
+      <th>企業研究</th>
+      <th>面接の質問</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @companies.each do |company| %>
+      <tr>
+        <td><%= company.name %></td>
+        <td><%= link_to "ES登録", new_user_company_es_path(@user, company) %></td>
+        <td><%= link_to "企業研究登録", new_user_company_research_path(@user, company) %></td>
+        <td><%= link_to "面接質問登録", new_user_company_interview_path(@user, company) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

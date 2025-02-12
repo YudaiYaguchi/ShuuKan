@@ -1,0 +1,132 @@
+<div class="company-container">
+  <h1 class="company-name"><%= @company.name %></h1>
+
+  <div class="form-container">
+    <h2>ES（エントリーシート）</h2>
+    <textarea class="input-box" placeholder="志望動機などを入力してください"></textarea>
+
+    <h2>面接の質問と回答</h2>
+    <div id="interview-section">
+      <div class="interview-item">
+        <input type="text" class="input-field" placeholder="質問を入力">
+        <textarea class="input-box" placeholder="あなたの回答を入力"></textarea>
+      </div>
+    </div>
+    <button class="add-button" onclick="addInterview()">質問を追加</button>
+
+    <h2>企業研究</h2>
+    <textarea class="input-box" placeholder="企業の特徴や強みを入力してください"></textarea>
+
+    <h2>面接の反省</h2>
+    <textarea class="input-box" placeholder="面接の反省点や改善点を入力してください"></textarea>
+
+    <button class="submit-button">登録</button>
+  </div>
+</div>
+
+<style>
+  /* メインのコンテナ */
+.company-container {
+  width: 80%;
+  margin: 30px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 企業名 */
+.company-name {
+  text-align: center;
+  font-size: 28px;
+  color: #0056b3;
+  margin-bottom: 20px;
+}
+
+/* フォーム全体 */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ラベル */
+h2 {
+  font-size: 20px;
+  color: #0056b3;
+  margin-bottom: 10px;
+}
+
+/* 入力フィールド */
+.input-box, .input-field {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #0056b3;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.input-box {
+  height: 100px;
+  resize: vertical;
+}
+
+/* 質問と回答の入力欄 */
+.interview-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+/* ボタンデザイン */
+.add-button, .submit-button {
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.add-button {
+  background-color: #0056b3;
+  color: white;
+}
+
+.add-button:hover {
+  background-color: #004094;
+}
+
+.submit-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.submit-button:hover {
+  background-color: #0056
+}
+</style>
+
+<script>
+  function addInterview() {
+  let interviewSection = document.getElementById("interview-section");
+
+  let newItem = document.createElement("div");
+  newItem.classList.add("interview-item");
+
+  let questionInput = document.createElement("input");
+  questionInput.type = "text";
+  questionInput.classList.add("input-field");
+  questionInput.placeholder = "質問を入力";
+
+  let answerTextarea = document.createElement("textarea");
+  answerTextarea.classList.add("input-box");
+  answerTextarea.placeholder = "あなたの回答を入力";
+
+  newItem.appendChild(questionInput);
+  newItem.appendChild(answerTextarea);
+  interviewSection.appendChild(newItem);
+}
+
+</script>
