@@ -23,6 +23,13 @@ RUN --mount=type=cache,target=/var/cache/apt \
     libjemalloc2 \
     pkg-config
 
+# Node.js のインストール
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
+  && apt-get install -y nodejs
+
+# Yarn のインストール
+RUN npm install -g yarn
+
 ENV LANG=C.UTF-8 \
   BUNDLE_JOBS=4 \
   BUNDLE_RETRY=3
