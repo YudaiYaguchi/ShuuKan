@@ -23,8 +23,8 @@ RUN --mount=type=cache,target=/var/cache/apt \
     libjemalloc2 \
     pkg-config
 
-# Node.js のインストール
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
+# Node.js のバージョンを 18.x に変更
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
   && apt-get install -y nodejs
 
 # Yarn のインストール

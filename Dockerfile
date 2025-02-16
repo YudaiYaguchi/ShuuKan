@@ -17,8 +17,8 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y curl libjemalloc2 libvips postgresql-client && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-# Node.js のインストール
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
+# Node.js のバージョンを 18.x に変更
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
   && apt-get install -y nodejs
 
 # Yarn のインストール
